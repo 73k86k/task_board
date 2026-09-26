@@ -6,11 +6,28 @@
 
 **task_board** — タスクを管理するためのタスクボードアプリケーション。
 
-### 技術スタック
+## デプロイ先
 
-- React 19 + Vite（JavaScript / JSX）
-- Lint: oxlint
-- タスクは React の state で管理し、localStorage（キー: `task_board.tasks`）に保存してリロード後も保持する
+https://73k86k.github.io/task_board/
+
+- GitHub Pages で公開している。`main` へのプッシュで `.github/workflows/deploy.yml` が lint → build → Pages へのデプロイを自動実行する。
+- 本番ビルドのベースパスは `/task_board/`（`vite.config.js`）。リポジトリ名を変えた場合はここも変更すること。
+
+## 技術スタック
+
+| 分類 | 使用技術 |
+| --- | --- |
+| 言語 | JavaScript（ES Modules）/ JSX（TypeScript は未使用） |
+| UI ライブラリ | React 19（関数コンポーネント + Hooks） |
+| ビルドツール | Vite 8（`@vitejs/plugin-react`） |
+| Lint | oxlint（設定: `.oxlintrc.json`） |
+| スタイル | 素の CSS（`src/index.css` にグローバル、`src/App.css` にコンポーネント用） |
+| 状態管理 | React の `useState`（外部ライブラリなし） |
+| データ保存 | localStorage（キー: `task_board.tasks`）。リロード後もタスクを保持する |
+| CI / ホスティング | GitHub Actions + GitHub Pages |
+| 実行環境 | Node.js 24 |
+
+## 開発環境
 
 ### コマンド
 
@@ -28,11 +45,33 @@ npm run lint     # Lint
 - `src/components/TaskItem.jsx` — タスク1件の表示（チェックボックス・削除ボタン）
 - `src/App.css` / `src/index.css` — スタイル
 
-### デプロイ（GitHub Pages）
+## コンポーネントの命名規約
 
-- 公開URL: https://73k86k.github.io/task_board/
-- `main` へのプッシュで `.github/workflows/deploy.yml` が lint → build → Pages へのデプロイを自動実行する。
-- 本番ビルドのベースパスは `/task_board/`（`vite.config.js`）。リポジトリ名を変えた場合はここも変更すること。
+### ファイル・コンポーネント名
+
+- コンポーネントは **PascalCase** で命名し、ファイル名もコンポーネント名と一致させる（例: `TaskItem` → `TaskItem.jsx`）。
+- 拡張子は `.jsx`。1ファイルに1コンポーネントとする。
+- ルートの `App.jsx` 以外のコンポーネントは `src/components/` に置く。
+- 名前は「対象 + 役割」の形にする（例: `TaskForm`、`TaskItem`、今後なら `TaskList`、`TaskFilter`）。
+
+### 定義の書き方
+
+- `function ComponentName({ prop1, prop2 }) { ... }` の関数宣言で定義し、props は引数で分割代入する。
+- ファイル末尾で `export default ComponentName` する。
+- import 時は拡張子まで書く（例: `import TaskItem from './components/TaskItem.jsx'`）。
+
+### props・関数名
+
+- 親から渡すイベント用の props は **`on` + 動詞**（例: `onAdd`、`onToggle`、`onDelete`）。
+- コンポーネント内のイベントハンドラは **`handle` + イベント**（例: `handleSubmit`）。
+- state を更新する関数は **動詞 + 対象**（例: `addTask`、`toggleTask`、`deleteTask`）。
+- 真偽値のフィールドは形容詞・過去分詞にする（例: `completed`）。
+
+### CSS クラス名
+
+- **BEM 風**の `block__element--modifier` 形式にする。
+- block はコンポーネント名を kebab-case にしたもの（例: `TaskItem` → `task-item`）。ただし `App` の外枠は `board` とする。
+- 例: `task-item`、`task-item__title`、`task-item--completed`、`task-form__input`
 
 ## 開発ルール
 
