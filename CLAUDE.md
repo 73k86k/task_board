@@ -28,6 +28,12 @@ npm run lint     # Lint
 - `src/components/TaskItem.jsx` — タスク1件の表示（チェックボックス・削除ボタン）
 - `src/App.css` / `src/index.css` — スタイル
 
+### デプロイ（GitHub Pages）
+
+- 公開URL: https://73k86k.github.io/task_board/
+- `main` へのプッシュで `.github/workflows/deploy.yml` が lint → build → Pages へのデプロイを自動実行する。
+- 本番ビルドのベースパスは `/task_board/`（`vite.config.js`）。リポジトリ名を変えた場合はここも変更すること。
+
 ## 開発ルール
 
 - 既存コードのスタイル・命名規則・ディレクトリ構成に合わせて実装する。
