@@ -10,7 +10,7 @@
 
 - React 19 + Vite（JavaScript / JSX）
 - Lint: oxlint
-- タスクは現在 React の state のみで管理（永続化なし）
+- タスクは React の state で管理し、localStorage（キー: `task_board.tasks`）に保存してリロード後も保持する
 
 ### コマンド
 

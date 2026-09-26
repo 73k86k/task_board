@@ -1,10 +1,30 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TaskForm from './components/TaskForm.jsx'
 import TaskItem from './components/TaskItem.jsx'
 import './App.css'
 
+const STORAGE_KEY = 'task_board.tasks'
+
+// 保存データが壊れている・ストレージが使えない場合は空の一覧から始める
+const loadTasks = () => {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY))
+    return Array.isArray(saved) ? saved : []
+  } catch {
+    return []
+  }
+}
+
 function App() {
-  const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState(loadTasks)
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks))
+    } catch {
+      // プライベートモードや容量超過で保存できない場合は無視する
+    }
+  }, [tasks])
 
   const addTask = (title) => {
     setTasks((prev) => [
