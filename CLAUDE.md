@@ -6,7 +6,27 @@
 
 **task_board** — タスクを管理するためのタスクボードアプリケーション。
 
-> 技術スタック・ディレクトリ構成・ビルド／テストコマンドは、実装が進み次第このファイルに追記すること。
+### 技術スタック
+
+- React 19 + Vite（JavaScript / JSX）
+- Lint: oxlint
+- タスクは現在 React の state のみで管理（永続化なし）
+
+### コマンド
+
+```bash
+npm install      # 依存パッケージのインストール
+npm run dev      # 開発サーバー起動
+npm run build    # 本番ビルド（dist/ に出力）
+npm run lint     # Lint
+```
+
+### ディレクトリ構成
+
+- `src/App.jsx` — タスク一覧の state と追加・完了切替・削除のロジック
+- `src/components/TaskForm.jsx` — タスク追加用の入力フォーム
+- `src/components/TaskItem.jsx` — タスク1件の表示（チェックボックス・削除ボタン）
+- `src/App.css` / `src/index.css` — スタイル
 
 ## 開発ルール
 
